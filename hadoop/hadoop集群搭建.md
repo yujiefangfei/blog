@@ -1,5 +1,5 @@
 前提：已经准备好三个linux(centos)节点
-<center> <h1>hadoop集群搭建</h1></center>
+<center> <h1>hadoop伪分布式集群搭建</h1></center>
 ###1.安装jdk
 1. 下载：<http://www.oracle.com/technetwork/java/javase/downloads/java-archive-downloads-javase7-521261.html>   
 2. 解压： tar -zxvf jdk-7u79-linux-x64.gz

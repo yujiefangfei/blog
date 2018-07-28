@@ -40,10 +40,10 @@ Kettle是免费开源的基于java的企业级ETL工具。<br/>
 	*  环境变量：环境变量可以通过edit menu下面的set environment  variables对话框进行设置。使用环境变量的唯一的问题是，它不能被动态的使用。如果在同一个应用服务器中执行两个或多个使用同一环境变量的转换，将可能发生冲突。环境变量在所以使用jvm的应用中可见。<br/>
 	*  Kettle变量：用于在一个小的动态范围内存储少量的信息。Kettle变量是kettle本地的，作用范围可以是一个工作或转换，在工作或转换中可以设置或修改。Set  variable步骤用来设置与此变量有关的工作从此设置其作用域，如：父工作、祖父工作或根工作。<br/>
 
-###3.嵌入和扩展kettle功能
+###4.嵌入和扩展kettle功能
 
 在工作中遇到了需要扩展kettle功能，并且在自己的java应用程序中执行kttle，即官网中描述的开发自定义插件以扩展PDI功能或将PDI引擎集成到自己的Java应用程序中。下面就分别来说明这两种方式：
-####3.1 开发自定义kettle插件
+####4.1 开发自定义kettle插件
 kttle插件主要有以下四种类型：
 [官方文档](https://help.pentaho.com/Documentation/8.1/Developer_Center/PDI/Extend) 
 
@@ -52,7 +52,7 @@ kttle插件主要有以下四种类型：
 * kettle-sdk-database-plugin
 * kettle-sdk-partitioner-plugin
 
-####3.2 将PDI引擎集成到自己的Java应用程序中
+####4.2 将PDI引擎集成到自己的Java应用程序中
 可以在其他Java应用程序中构建和运行PDI转换和作业 
 [kttle wiki demo](https://wiki.pentaho.com/display/EAI/Pentaho+Data+Integration+-+Java+API+Examples) 
 
