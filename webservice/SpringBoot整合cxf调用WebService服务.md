@@ -1,11 +1,11 @@
 
 <center> <h1>SpringBoot整合cxf调用WebService服务</h1></center>
 
-###1.WebService简介
+#1.WebService简介
 
 WebService是一种跨编程语言和跨操作系统平台的远程调用技术。跨编程语言和跨操作平台，就是说服务端程序采用java编写，客户端程序则可以采用其他编程语言编写，反之亦然！跨操作系统平台则是指服务端程序和客户端程序可以在不同的操作系统上运行。远程调用，就是一台计算机a上的一个程序可以调用到另外一台计算机b上的一个对象的方法。
 
-###2.发布WebService服务
+#2.发布WebService服务
   
   最近的工作中,主要调用第三方webserivce服务，为了方便就在本地模拟了一个webserivce服务端，因此服务端就简单用了java project。<br/>
 生成一个webservice服务端分三个部分：服务端接口、实现接口、发布服务
@@ -58,7 +58,7 @@ WebService是一种跨编程语言和跨操作系统平台的远程调用技术�
 5. 运行TestWebServicePublish，控制台输出：发布 helloUser webservice 成功！<br/>访问http://localhost:8080/Webservice/helloUser?wsdl，可以看到该服务的wsdl文档
 
 
-###3.SpringBoot整合cxf调用WebService服务
+#3.SpringBoot整合cxf调用WebService服务
 1. 在pom.xml文件中添加cxf的依赖
 
 		<dependency>
@@ -135,7 +135,7 @@ WebService是一种跨编程语言和跨操作系统平台的远程调用技术�
 	启动客户端后，控制台会打印出调用服务端方法获取的返回值,如下图
 	![Alt text](/images/webservice1.jpg)
 
-###4.调用WebService服务可能遇到的问题
+#4.调用WebService服务可能遇到的问题
 1. `java.lang.RuntimeException: Cannot create a secure XMLInputFactory`,解决这个问题，需要在创建动态客户端代码前面加上`System.setProperty(StaxUtils.ALLOW_INSECURE_PARSER,"true");`
 
 
