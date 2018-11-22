@@ -1,6 +1,6 @@
 
 <center> <h1>基于SpringBoot项目的https</h1></center>
-###1.生成和导入证书步骤：
+### 1.生成和导入证书步骤：
 1. 生成请求证书：   
 1.1&nbsp;&nbsp;keytool -genkey -alias [Name] -keypass [Password] -keyalg RSA -keysize 2048 -validity 18250 -keystore [Name]<br/>
 -alias:后的Name为要申请的证书的别名<br/>
@@ -26,7 +26,7 @@ Name、password必须与步骤1.1相同<br/>
 例:`Keytool -import -alias www.test.com -keystore www.test.com -trustcacerts -storepass 12345678 -file www.test.com.cer`
 上述步骤完成后，会生成一个以www.test.com命名的文件，这个文件就是项目中需要用到的。<br/>
 4. 
-###2.在springboot中配置https
+### 2.在springboot中配置https
 
 1. 将www.test.com文件放入项目的src/main/resources文件夹下
 2. 修改配置application.properties文件

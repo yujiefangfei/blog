@@ -41,12 +41,12 @@
 			<!--指定hdfs中namenode的存储位置-->
 			<property>
 				<name>dfs.namenode.name.dir</name>
-				<value>file:/home/hadoop/dfs/name</value>
+				<value>file:/home/hadoop/hdfs/name</value>
 			</property>
 			<!--指定hdfs中datanode的存储位置-->
 			<property>
 				<name>dfs.datanode.data.dir</name>
-				<value>file:/home/hadoop/dfs/data</value>
+				<value>file:/home/hadoop/hdfs/data</value>
 			</property>
 			<!--指定hdfs保存数据的副本数量-->
 			<property>
@@ -142,17 +142,49 @@
 	* 初始化，输入命令，bin/hdfs namenode -format
 	* 全部启动：sbin/start-all.sh
 	* 停止：sbin/stop-all.sh
-	* 输入jsp，可查看相关信息
+	* 输入jps，可查看相关启动信息
+	* 也可以访问Hadoop的默认端口号50070，打开http://masert:50070网址，查看Hadoop相关信息
+
 12. web访问，先要开放端口或者直接关闭防火墙
 	* 输入命令，systemctl stop firewalld.service
 	* 浏览器打开http://192.168.0.182:8088/
 	* 浏览器打开http://192.168.0.182:50070/
 13. 测试wordcount
 	* 首先要在本地/home下新建一个word.txt，并写入一些英文单词到该文件。
-	* 在hdfs上新建一个input目录`hadoop fs -mkdir input`
-	* 在hdfs上新建一个output目录`hadoop fs -mkdir output`，当wordcount程序执行结束后，会将执行的结果放入到该目录下
-	* 将本地的word.txt文件放入hdfs的input目录下 `hapdoop fs -put /home/word.txt  input`
-	* 在hadoop上执行wordcount程序：<br/>`hadoop jar /home/hadoop/share/hadoop/mapreduce/hadoop-mapreduce-examples-2.7.6.jar wordcount input  output`
+	* 在hdfs上新建一个input目录`hadoop fs -mkdir /input`
+	* 将本地的word.txt文件放入hdfs的input目录下 `hapdoop fs -put /home/word.txt  /input`
+	* 在hadoop上执行wordcount程序：<br/>`hadoop jar /home/hadoop/share/hadoop/mapreduce/hadoop-mapreduce-examples-2.7.6.jar wordcount /input  /output`
+	* output为输出目录，不能事先建好
 	* 查看输出结果：<br/>
 	`hadoop fs -ls output`<br/>
 	`hadoop fs -cat output/part-r-00000`
+###3.遇到的问题
+1. HDFS block丢失过多进入安全模式（Safe mode）的解决方法
+	
+
+		The number of live datanodes 3 has reached the minimum number 0.
+		Safe mode will be turned off automatically once the thresholds have been reached.
+		Caused by: org.apache.hadoop.hdfs.server.namenode.SafeModeException: Log not rolled.
+ 		Name node is in safe mode.
+		The reported blocks 632758 needs additional 5114 blocks to reach the threshold 0.9990 of total blocks 638510.
+		The number of live datanodes 3 has reached the minimum number 0.
+
+		Safe mode will be turned off automatically once the thresholds have been reached.
+
+		at org.apache.hadoop.hdfs.server.namenode.FSNamesystem.checkNameNodeSafeMode
+
+		(FSNamesystem.java:1209)
+
+   		 ... 12 more	
+	原因分析(Cause Analysis)*
+
+由于系统断电，内存不足等原因导致dataNode丢失超过设置的丢失百分比，系统自动进入安全模式
+
+解决办法(Solution)*
+
+	安装HDFS客户端，并执行如下命令：
+
+	* 步骤 1   执行命令退出安全模式：`hadoop dfsadmin -safemode leave`
+	* 步骤 2   执行健康检查，删除损坏掉的`block：  hdfs fsck  /  -delete`
+
+注意: 这种方式会出现数据丢失，损坏的block会被删掉
